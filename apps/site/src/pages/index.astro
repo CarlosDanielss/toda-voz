@@ -1,0 +1,52 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { Landing } from '@/components/Landing';
+import { conferirDecisoesCitadas, dadosDoProjeto, rotasDasDecisoes } from '../lib/projeto';
+
+const [objetivo, historico, descobertas, obstaculos, roteiro] = await Promise.all([
+  getEntry('contexto', 'objetivo-e-motivacao'),
+  getEntry('contexto', 'historico'),
+  getEntry('contexto', 'descobertas'),
+  getEntry('contexto', 'obstaculos-e-solucoes'),
+  getEntry('contexto', 'roteiro'),
+]);
+if (!objetivo || !historico || !descobertas || !obstaculos || !roteiro) {
+  throw new Error('Faltam arquivos obrigatórios em context/ para a página inicial.');
+}
+
+const projeto = await dadosDoProjeto();
+const rotas = await rotasDasDecisoes();
+const itens = obstaculos.data.itens ?? [];
+conferirDecisoesCitadas(itens, rotas);
+
+const modulos = (await getCollection('modulos'))
+  .sort((a, b) => a.data.ordem - b.data.ordem)
+  .map((m) => ({ id: m.id, ordem: m.data.ordem, fase: m.data.fase, titulo: m.data.titulo, descricao: m.data.descricao }));
+const decisoes = (await getCollection('decisoes'))
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((d) => ({ id: d.id, titulo: d.data.titulo, status: d.data.status }));
+const contar = (d: string) => itens.filter((i) => i.decisao === d).length;
+---
+
+<Base title="Toda Voz" description={objetivo.data.descricao}>
+  <Landing
+    versao={projeto.versao}
+    inicioISO={projeto.inicioISO}
+    inicioTexto={projeto.inicioTexto}
+    faseAtualTexto={projeto.faseAtualTexto}
+    resumo={objetivo.data.resumo ?? []}
+    porqueComecei={historico.data.porque_comecei?.trim() || undefined}
+    destaques={objetivo.data.destaques ?? []}
+    principios={objetivo.data.principios ?? []}
+    historia={historico.data.resumo ?? []}
+    descobertas={descobertas.data.destaques ?? []}
+    fases={roteiro.data.fases ?? []}
+    obstaculos={itens.filter((i) => i.destaque)}
+    totalObstaculos={itens.length}
+    contagem={{ decidido: contar('decidido'), 'em-avaliacao': contar('em-avaliacao'), descartado: contar('descartado') }}
+    rotasDecisoes={rotas}
+    modulos={modulos}
+    decisoes={decisoes}
+  />
+</Base>

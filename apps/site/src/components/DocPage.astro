@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { Badge } from '@/components/ui/badge';
+import { StatusBadge } from '@/components/StatusBadge';
+
+interface Props {
+  // Qualquer entrada de coleção com o cabeçalho comum do context/.
+  entry: any;
+  kind?: string;
+}
+
+const { entry, kind } = Astro.props;
+const { Content } = await render(entry);
+const atualizado = entry.data.atualizado.toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+---
+
+<Base title={entry.data.titulo} description={entry.data.descricao}>
+  <article class="container-page py-10 md:py-14">
+    <div class="mb-6 flex flex-wrap items-center gap-2 text-muted-foreground">
+      {kind && <Badge variant="outline">{kind}</Badge>}
+      <StatusBadge status={entry.data.status} />
+      <span class="ml-1">Atualizado em {atualizado}</span>
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+    <slot />
+  </article>
+</Base>

@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { StatusBadge } from '@/components/StatusBadge';
+
+const decisoes = (await getCollection('decisoes')).sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<Base title="Decisões" description="Todas as decisões do Toda Voz, com o motivo, as alternativas e o que muda com cada uma.">
+  <div class="container-page py-10 md:py-14">
+    <h1 class="text-4xl font-bold tracking-tight md:text-5xl">Decisões</h1>
+    <p class="mt-3 mb-10 max-w-2xl text-lg text-muted-foreground">
+      Cada decisão importante é registrada com o motivo, as alternativas que pensamos e o que muda com ela.
+      <strong class="text-foreground">Aceita</strong> está em vigor; <strong class="text-foreground">proposta</strong>
+      ainda espera validação.
+    </p>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead scope="col">Decisão</TableHead>
+          <TableHead scope="col">Situação</TableHead>
+          <TableHead scope="col">Data</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {
+          decisoes.map((d) => (
+            <TableRow>
+              <TableCell>
+                <a class="text-primary underline underline-offset-4" href={`/decisoes/${d.id}/`}>
+                  {d.data.titulo}
+                </a>
+              </TableCell>
+              <TableCell>
+                <StatusBadge status={d.data.status} />
+              </TableCell>
+              <TableCell>{d.data.data.toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</TableCell>
+            </TableRow>
+          ))
+        }
+      </TableBody>
+    </Table>
+  </div>
+</Base>

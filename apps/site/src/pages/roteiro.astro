@@ -1,0 +1,31 @@
+---
+import { getEntry, render } from 'astro:content';
+import { CalendarDays, MapPin, Tag } from 'lucide-react';
+import Base from '../layouts/Base.astro';
+import { Badge } from '@/components/ui/badge';
+import { Roadmap } from '@/components/Roadmap';
+import { dadosDoProjeto } from '../lib/projeto';
+
+const roteiro = await getEntry('contexto', 'roteiro');
+if (!roteiro) throw new Error('context/roteiro.md não encontrado.');
+const { Content } = await render(roteiro);
+const projeto = await dadosDoProjeto();
+---
+
+<Base title="Roteiro" description={roteiro.data.descricao}>
+  <div class="container-page py-10 md:py-14">
+    <div class="mb-6 flex flex-wrap gap-2">
+      <Badge><MapPin aria-hidden="true" />{projeto.faseAtualTexto}</Badge>
+      <Badge variant="outline"><Tag aria-hidden="true" />Versão {projeto.versao}</Badge>
+      <Badge variant="outline"><CalendarDays aria-hidden="true" />Iniciado em {projeto.inicioTexto}</Badge>
+    </div>
+    <h1 class="text-4xl font-bold tracking-tight md:text-5xl">Roteiro</h1>
+    <p class="mt-3 mb-10 max-w-2xl text-lg text-muted-foreground">{roteiro.data.descricao}</p>
+    <div class="max-w-3xl">
+      <Roadmap fases={roteiro.data.fases ?? []} todosOsMarcos />
+    </div>
+    <div class="prose mt-12">
+      <Content />
+    </div>
+  </div>
+</Base>

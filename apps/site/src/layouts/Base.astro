@@ -1,0 +1,238 @@
+---
+import '@fontsource-variable/atkinson-hyperlegible-next/wght.css';
+import '../styles/global.css';
+import { Menu, Moon, Sun, Tag, X } from 'lucide-react';
+import { badgeVariants } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { LogoSimbolo } from '@/components/Logo';
+import { cn } from '@/lib/utils';
+import { dadosDoProjeto } from '../lib/projeto';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title === 'Toda Voz' ? 'Toda Voz: toda voz importa' : `${title} · Toda Voz`;
+const path = Astro.url.pathname;
+const projeto = await dadosDoProjeto();
+
+// "Início" fica no logo.
+const nav = [
+  { href: '/roteiro/', label: 'Roteiro' },
+  { href: '/contexto/objetivo-e-motivacao/', label: 'Motivação' },
+  { href: '/contexto/descobertas/', label: 'Descobertas' },
+  { href: '/modulos/', label: 'Módulos' },
+  { href: '/decisoes/', label: 'Decisões' },
+  { href: '/contexto/', label: 'Documentação' },
+];
+
+// Só um item fica marcado: o de caminho mais longo que combina (ex.: "Descobertas", e não "Documentação").
+const atual = nav
+  .filter((i) => path.startsWith(i.href))
+  .sort((a, b) => b.href.length - a.href.length)[0]?.href;
+const isCurrent = (href: string) => href === atual;
+
+const linkDesktop =
+  'inline-flex min-h-11 items-center rounded-md px-3 font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-primary aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[10px]';
+const linkCelular =
+  'flex min-h-12 items-center rounded-md px-3 text-lg font-medium text-foreground hover:bg-accent aria-[current=page]:bg-secondary aria-[current=page]:font-bold';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Aplica o tema antes de desenhar a página (escolha salva ou tema do sistema), para não piscar. -->
+    <script is:inline>
+      (function () {
+        var t = null;
+        try {
+          t = localStorage.getItem('tema');
+        } catch (e) {}
+        var escuro = t === 'escuro' || (t !== 'claro' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var r = document.documentElement;
+        r.classList.toggle('dark', escuro);
+        r.classList.toggle('light', !escuro);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+  </head>
+  <body class="min-h-dvh">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <div class="container-page relative flex h-16 items-center gap-2">
+        <a href="/" class="mr-4 flex min-h-11 items-center gap-2.5 rounded-md text-lg font-bold tracking-tight">
+          <LogoSimbolo id="cabecalho" className="h-7 w-auto" />
+          Toda Voz
+        </a>
+
+        <nav aria-label="Principal" class="hidden lg:block">
+          <ul class="flex items-center">
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined} class={linkDesktop}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="ml-auto flex items-center gap-1">
+          <a
+            href="/roteiro/"
+            class={cn(badgeVariants({ variant: 'outline' }), 'mr-1 hidden sm:inline-flex')}
+            title="Versão atual do projeto"
+          >
+            <Tag aria-hidden="true" />v{projeto.versao}
+          </a>
+
+          <!-- Tema: um botão que sempre diz o que vai fazer. Aparece só com JavaScript. -->
+          <button type="button" id="tema-botao" class={buttonVariants({ variant: 'ghost', size: 'icon' })} hidden>
+            <span data-para="escuro"><Moon aria-hidden="true" /></span>
+            <span data-para="claro" hidden><Sun aria-hidden="true" /></span>
+          </button>
+
+          <!-- Menu do celular: funciona sem JavaScript. -->
+          <details class="group lg:hidden">
+            <summary
+              class={cn(
+                buttonVariants({ variant: 'ghost', size: 'sm' }),
+                'cursor-pointer list-none [&::-webkit-details-marker]:hidden'
+              )}
+            >
+              <span class="group-open:hidden"><Menu aria-hidden="true" /></span>
+              <span class="hidden group-open:inline"><X aria-hidden="true" /></span>
+              <span class="group-open:hidden">Menu</span>
+              <span class="hidden group-open:inline">Fechar</span>
+            </summary>
+            <nav aria-label="Principal" class="absolute inset-x-0 top-full border-b bg-background shadow-lg">
+              <ul class="container-page grid gap-1 py-3">
+                <li>
+                  <a href="/" aria-current={path === '/' ? 'page' : undefined} class={linkCelular}>Início</a>
+                </li>
+                {
+                  nav.map((item) => (
+                    <li>
+                      <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined} class={linkCelular}>
+                        {item.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="border-t bg-muted/50 py-10 text-muted-foreground">
+      <div class="container-page grid gap-2">
+        <p class="flex items-center gap-2.5">
+          <LogoSimbolo id="rodape" className="h-6 w-auto" />
+          <strong class="text-foreground">Toda Voz</strong>
+        </p>
+        <p>
+          Versão {projeto.versao} · {projeto.faseAtualTexto} · iniciado em {projeto.inicioTexto}.
+        </p>
+        <p>Projeto sem fins lucrativos e aberto a quem quiser ajudar.</p>
+        <p>Código sob AGPL-3.0. Conteúdo sob CC BY-NC-SA 4.0, sem uso comercial.</p>
+        <p>
+          Este site é gerado a partir da pasta <code class="rounded bg-muted px-1.5 py-0.5 font-mono">context/</code>
+          do repositório. As fontes estão em{' '}
+          <a class="text-primary underline underline-offset-4" href="/contexto/referencias/">Referências</a>.
+        </p>
+        <p>
+          <button
+            type="button"
+            id="tema-sistema"
+            class={cn(buttonVariants({ variant: 'link' }), 'h-auto min-h-11 px-0')}
+            hidden
+          >
+            Voltar a seguir o tema do sistema
+          </button>
+        </p>
+        <p id="tema-aviso" class="sr-only" aria-live="polite"></p>
+      </div>
+    </footer>
+
+    <!--
+      Tema: o botão do cabeçalho alterna entre claro e escuro e sempre diz o que vai fazer
+      ("Usar tema escuro" / "Usar tema claro"). Enquanto a pessoa não escolhe, o site segue o sistema.
+      Depois de escolher, o rodapé mostra "Voltar a seguir o tema do sistema".
+    -->
+    <script is:inline>
+      (function () {
+        var botao = document.getElementById('tema-botao');
+        var sistema = document.getElementById('tema-sistema');
+        var aviso = document.getElementById('tema-aviso');
+        if (!botao) return;
+        var midia = window.matchMedia('(prefers-color-scheme: dark)');
+        var memoria = null; // usado se o navegador não deixar salvar
+
+        function lerEscolha() {
+          try {
+            return localStorage.getItem('tema');
+          } catch (e) {
+            return memoria;
+          }
+        }
+        function gravarEscolha(valor) {
+          memoria = valor;
+          try {
+            if (valor) localStorage.setItem('tema', valor);
+            else localStorage.removeItem('tema');
+          } catch (e) {}
+        }
+        function escuroAgora() {
+          var t = lerEscolha();
+          return t === 'escuro' || (t !== 'claro' && midia.matches);
+        }
+        function aplicar(mensagem) {
+          var escuro = escuroAgora();
+          var raiz = document.documentElement;
+          raiz.classList.toggle('dark', escuro);
+          raiz.classList.toggle('light', !escuro);
+          var acao = escuro ? 'Usar tema claro' : 'Usar tema escuro';
+          botao.setAttribute('aria-label', acao);
+          botao.title = acao;
+          botao.querySelector('[data-para="escuro"]').hidden = escuro;
+          botao.querySelector('[data-para="claro"]').hidden = !escuro;
+          if (sistema) sistema.hidden = !lerEscolha();
+          if (mensagem && aviso) aviso.textContent = mensagem;
+        }
+
+        aplicar();
+        botao.hidden = false;
+        midia.addEventListener('change', function () {
+          if (!lerEscolha()) aplicar();
+        });
+        botao.addEventListener('click', function () {
+          var irParaEscuro = !escuroAgora();
+          gravarEscolha(irParaEscuro ? 'escuro' : 'claro');
+          aplicar(irParaEscuro ? 'Tema escuro ativado.' : 'Tema claro ativado.');
+        });
+        if (sistema) {
+          sistema.addEventListener('click', function () {
+            gravarEscolha(null);
+            aplicar('O site voltou a seguir o tema do sistema.');
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+---
+import { getEntry } from 'astro:content';
+import DocPage from '../components/DocPage.astro';
+
+const pesquisa = await getEntry('pesquisa', 'pesquisa-inicial');
+if (!pesquisa) throw new Error('context/pesquisa/pesquisa-inicial.md não encontrado.');
+---
+
+<DocPage entry={pesquisa} kind="Pesquisa" />

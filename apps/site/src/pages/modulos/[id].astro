@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import DocPage from '../../components/DocPage.astro';
+
+export async function getStaticPaths() {
+  const modulos = await getCollection('modulos');
+  return modulos.map((modulo) => ({ params: { id: modulo.id }, props: { modulo } }));
+}
+
+const { modulo } = Astro.props;
+---
+
+<DocPage entry={modulo} kind={`Módulo ${String(modulo.data.ordem).padStart(2, '0')} · fase ${modulo.data.fase}`} />

@@ -1,0 +1,9 @@
+---
+import { getEntry } from 'astro:content';
+import DocPage from '../../components/DocPage.astro';
+
+const indice = await getEntry('contexto', 'readme');
+if (!indice) throw new Error('context/README.md não encontrado.');
+---
+
+<DocPage entry={indice} kind="Contexto" />

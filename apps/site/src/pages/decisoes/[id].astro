@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import DocPage from '../../components/DocPage.astro';
+
+export async function getStaticPaths() {
+  const decisoes = await getCollection('decisoes');
+  return decisoes.map((decisao) => ({ params: { id: decisao.id }, props: { decisao } }));
+}
+
+const { decisao } = Astro.props;
+---
+
+<DocPage entry={decisao} kind="Decisão" />

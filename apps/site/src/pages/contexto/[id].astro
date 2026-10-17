@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import DocPage from '../../components/DocPage.astro';
+
+export async function getStaticPaths() {
+  // Estes documentos têm página própria: /contexto/ (índice), /roteiro/ e /contexto/obstaculos-e-solucoes/.
+  const comPaginaPropria = ['readme', 'roteiro', 'obstaculos-e-solucoes'];
+  const docs = await getCollection('contexto');
+  return docs
+    .filter((doc) => !comPaginaPropria.includes(doc.id))
+    .map((doc) => ({ params: { id: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+---
+
+<DocPage entry={doc} kind="Contexto" />
