@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" fill="none" role="img" aria-labelledby="tv-h-claro-titulo">
+  <title id="tv-h-claro-titulo">Toda Voz: toda voz importa</title>
+  <defs>
+    <linearGradient id="tv-h-claro-grad" x1="0%" y1="20%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#5844D4" />
+      <stop offset="100%" stop-color="#0A6E88" />
+    </linearGradient>
+    <style>
+      .nome { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 700; fill: #15151D; font-size: 58px; letter-spacing: -0.02em; }
+      .slogan { font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', system-ui, sans-serif; font-weight: 600; fill: #0A6E88; font-size: 24px; }
+    </style>
+  </defs>
+
+  <!-- Símbolo: ponto (olhar, intenção), haste (gesto, sinal) e arco (voz que se propaga) -->
+  <g transform="translate(45, 45)">
+    <circle cx="25" cy="75" r="18" fill="url(#tv-h-claro-grad)" />
+    <rect x="65" y="30" width="28" height="90" rx="14" fill="url(#tv-h-claro-grad)" />
+    <path d="M 115 20 C 145 35 155 115 115 130" stroke="url(#tv-h-claro-grad)" stroke-width="26" stroke-linecap="round" />
+  </g>
+
+  <text x="240" y="115" class="nome">Toda Voz</text>
+  <text x="242" y="155" class="slogan">Toda voz importa</text>
+</svg>

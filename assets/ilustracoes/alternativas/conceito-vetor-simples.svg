@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <!-- Gradiente oficial da marca -->
+    <linearGradient id="tv-pulse-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5844D4" />
+      <stop offset="50%" stop-color="#9F99FE" />
+      <stop offset="100%" stop-color="#5ED9E6" />
+    </linearGradient>
+    <linearGradient id="tv-accent-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0A6E88" />
+      <stop offset="100%" stop-color="#5ED9E6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ondas e conexões geométricas conectando o grupo (Linguagem do Logo) -->
+  <g opacity="0.85">
+    <!-- Pulsos de gaze / rastreamento ocular -->
+    <path d="M 400 320 C 470 300, 520 340, 580 330" stroke="url(#tv-pulse-grad)" stroke-width="4" stroke-dasharray="8 8" stroke-linecap="round" />
+    <!-- Formas geométricas de voz: arcos, hastes e pontos em suspensão -->
+    <circle cx="590" cy="330" r="12" fill="url(#tv-pulse-grad)" />
+    <rect x="620" y="290" width="16" height="58" rx="8" fill="url(#tv-pulse-grad)" />
+    <path d="M 660 280 C 690 300 690 350 660 370" stroke="url(#tv-pulse-grad)" stroke-width="14" stroke-linecap="round" fill="none" />
+    
+    <!-- Onda expansiva acolhedora acima do grupo -->
+    <path d="M 460 220 C 560 180, 680 180, 780 230" stroke="url(#tv-accent-cyan)" stroke-width="6" stroke-linecap="round" fill="none" />
+    <circle cx="430" cy="235" r="8" fill="#5ED9E6" />
+    <circle cx="810" cy="245" r="10" fill="#B0A2FE" />
+  </g>
+
+  <!-- Elementos de Tecnologia Acessiva Integrada -->
+  <!-- Tablet com grade simplificada de pictogramas -->
+  <g transform="translate(240, 430)">
+    <rect width="130" height="90" rx="14" fill="#15151D" stroke="#9F99FE" stroke-width="2" />
+    <rect x="12" y="14" width="22" height="22" rx="4" fill="url(#tv-pulse-grad)" />
+    <rect x="42" y="14" width="22" height="22" rx="4" fill="#5ED9E6" />
+    <rect x="72" y="14" width="22" height="22" rx="4" fill="#B0A2FE" />
+    <rect x="12" y="44" width="22" height="22" rx="4" fill="#5ED9E6" />
+    <rect x="42" y="44" width="22" height="22" rx="4" fill="url(#tv-pulse-grad)" />
+    <rect x="72" y="44" width="22" height="22" rx="4" fill="#5844D4" />
+  </g>
+
+  <!-- Botão acionador grande acessível -->
+  <g transform="translate(850, 460)">
+    <ellipse cx="40" cy="45" rx="36" ry="16" fill="#15151D" opacity="0.3" />
+    <rect x="8" y="20" width="64" height="24" rx="12" fill="#0A6E88" />
+    <ellipse cx="40" cy="20" rx="32" ry="14" fill="url(#tv-pulse-grad)" />
+  </g>
+</svg>

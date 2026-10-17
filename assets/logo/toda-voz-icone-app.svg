@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-labelledby="tv-app-titulo">
+  <title id="tv-app-titulo">Toda Voz</title>
+  <defs>
+    <linearGradient id="tv-app-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5844D4" />
+      <stop offset="100%" stop-color="#0A6E88" />
+    </linearGradient>
+  </defs>
+
+  <!-- Fundo com raio suave padrão de app icon (ou plano transparente se for ícone adaptativo) -->
+  <rect width="512" height="512" rx="115" fill="#FCFDFE" />
+
+  <!-- Guia visual da Safe Zone (66% = 338px centrais, raio 169px a partir de 256, 256) -->
+  <!-- Símbolo em Cor Sólida de Alto Contraste dentro da Safe Zone -->
+  <g transform="translate(156, 176)">
+    <!-- Elemento 1: Ponto / Foco -->
+    <circle cx="28" cy="80" r="24" fill="url(#tv-app-bg)" />
+    <!-- Elemento 2: Haste -->
+    <rect x="76" y="24" width="34" height="112" rx="17" fill="url(#tv-app-bg)" />
+    <!-- Elemento 3: Arco de expansão -->
+    <path d="M 142 16 C 182 35 194 125 142 144" stroke="url(#tv-app-bg)" stroke-width="32" stroke-linecap="round" />
+  </g>
+</svg>

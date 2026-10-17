@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 150" fill="none" role="img" aria-labelledby="tv-simbolo-titulo">
+  <title id="tv-simbolo-titulo">Toda Voz</title>
+  <defs>
+    <linearGradient id="tv-simbolo-grad" x1="0%" y1="20%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#5844D4" />
+      <stop offset="100%" stop-color="#0A6E88" />
+    </linearGradient>
+  </defs>
+  <!-- Ponto (olhar, intenção), haste (gesto, sinal) e arco (voz que se propaga) -->
+  <circle cx="25" cy="75" r="18" fill="url(#tv-simbolo-grad)" />
+  <rect x="65" y="30" width="28" height="90" rx="14" fill="url(#tv-simbolo-grad)" />
+  <path d="M 115 20 C 145 35 155 115 115 130" stroke="url(#tv-simbolo-grad)" stroke-width="26" stroke-linecap="round" />
+</svg>

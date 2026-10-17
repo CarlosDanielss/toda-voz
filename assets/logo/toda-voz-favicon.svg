@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6.5 1 148 148" fill="none" role="img" aria-labelledby="tv-favicon-titulo">
+  <title id="tv-favicon-titulo">Toda Voz</title>
+  <!--
+    Ícone da aba do navegador: só o símbolo, sem fundo, ocupando o quadrado inteiro.
+    As cores mudam conforme o tema do sistema, para aparecer bem em abas claras e escuras.
+  -->
+  <style>
+    .a { stop-color: #5844D4; }
+    .b { stop-color: #0A6E88; }
+    @media (prefers-color-scheme: dark) {
+      .a { stop-color: #B0A2FE; }
+      .b { stop-color: #5ED9E6; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="tv-favicon-grad" x1="0%" y1="20%" x2="100%" y2="80%">
+      <stop offset="0%" class="a" />
+      <stop offset="100%" class="b" />
+    </linearGradient>
+  </defs>
+  <circle cx="25" cy="75" r="18" fill="url(#tv-favicon-grad)" />
+  <rect x="65" y="30" width="28" height="90" rx="14" fill="url(#tv-favicon-grad)" />
+  <path d="M 115 20 C 145 35 155 115 115 130" stroke="url(#tv-favicon-grad)" stroke-width="26" stroke-linecap="round" />
+</svg>

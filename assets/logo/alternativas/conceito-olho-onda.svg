@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450" fill="none">
+  <defs>
+    <linearGradient id="tv-c3-vert" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5844D4" />
+      <stop offset="100%" stop-color="#0A6E88" />
+    </linearGradient>
+    <style>
+      .v-title { font-family: 'Atkinson Hyperlegible Next', sans-serif; font-weight: 700; fill: #15151D; font-size: 52px; text-anchor: middle; }
+      .v-tag { font-family: 'Atkinson Hyperlegible Next', sans-serif; font-weight: 600; fill: #5844D4; font-size: 16px; letter-spacing: 0.08em; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Símbolo Centralizado (Eye-tracking + Propagação Sonora) -->
+  <g transform="translate(110, 40)">
+    <!-- Arco superior com terminação suave -->
+    <path d="M 10 90 C 25 35 155 35 170 90" stroke="url(#tv-c3-vert)" stroke-width="22" stroke-linecap="round" />
+    <!-- Arco inferior -->
+    <path d="M 10 90 C 25 145 155 145 170 90" stroke="url(#tv-c3-vert)" stroke-width="22" stroke-linecap="round" />
+    <!-- Pupila / Pulso de som central -->
+    <circle cx="90" cy="90" r="26" fill="url(#tv-c3-vert)" />
+  </g>
+
+  <!-- Nome centralizado abaixo -->
+  <text x="200" y="305" class="v-title">Toda Voz</text>
+  <text x="200" y="340" class="v-tag">TODA VOZ IMPORTA</text>
+</svg>

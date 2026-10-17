@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 150" fill="none" role="img" aria-labelledby="tv-simbolo-mono-titulo">
+  <title id="tv-simbolo-mono-titulo">Toda Voz</title>
+  <!-- Versão em uma cor só: herda a cor do texto ao redor (currentColor). -->
+  <circle cx="25" cy="75" r="18" fill="currentColor" />
+  <rect x="65" y="30" width="28" height="90" rx="14" fill="currentColor" />
+  <path d="M 115 20 C 145 35 155 115 115 130" stroke="currentColor" stroke-width="26" stroke-linecap="round" />
+</svg>
