@@ -1,0 +1,269 @@
+/*
+  Estilos do site Toda Voz: Tailwind CSS v4 + shadcn/ui, com ajustes de acessibilidade.
+  As cores vêm de tokens.css (ver context/identidade-visual.md).
+  Regras: texto base de 18px, linhas curtas, foco sólido, alvos de 44px, ênfase em negrito.
+*/
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './tokens.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-surface: var(--destructive-surface);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-brand-from: var(--brand-from);
+  --color-brand-to: var(--brand-to);
+  --color-glow-1: var(--glow-1);
+  --color-glow-2: var(--glow-2);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-size: 112.5%; /* 18px: todo o tamanho em rem acompanha */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Com o cabeçalho fixo (telas médias ou maiores), o foco não fica escondido debaixo dele. */
+  @media (min-width: 48rem) {
+    html {
+      scroll-padding-top: 6rem;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    line-height: 1.6;
+  }
+
+  /*
+    Tudo que é clicável mostra a "mãozinha". O Tailwind v4 deixa botões com o cursor padrão,
+    então devolvemos o ponteiro para botões, o menu do celular e campos de escolha.
+  */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary,
+  select,
+  label[for],
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+  }
+
+  /* Foco sempre sólido e visível (WCAG 2.4.7 / 2.4.13). */
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Ênfase sempre em negrito, nunca em itálico. */
+  em,
+  i {
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 25%, transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply bg-primary text-primary-foreground fixed top-[-10rem] left-4 z-50 rounded-md px-4 py-3 font-bold;
+  }
+  .skip-link:focus {
+    top: 0.75rem;
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 md:px-6;
+  }
+
+  /* Texto com gradiente da marca. As duas pontas têm contraste ≥ 4,5:1 (conferido no build). */
+  .text-gradient {
+    background-image: linear-gradient(100deg, var(--brand-from), var(--brand-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Brilho decorativo do topo da página. */
+  .hero-glow {
+    background:
+      radial-gradient(40rem 22rem at 80% -10%, color-mix(in oklch, var(--glow-1) 22%, transparent), transparent 70%),
+      radial-gradient(34rem 20rem at 0% 0%, color-mix(in oklch, var(--glow-2) 18%, transparent), transparent 70%);
+  }
+
+  .grid-dots {
+    background-image: radial-gradient(color-mix(in oklch, var(--foreground) 9%, transparent) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+
+  /* Notas de referência: pequenas, ao lado do texto, sem atrapalhar a leitura. */
+  .cite {
+    font-size: 0.7em;
+    line-height: 0;
+    margin-left: 0.15em;
+    white-space: nowrap;
+  }
+  .cite a {
+    @apply bg-secondary text-muted-foreground hover:text-primary inline-block rounded px-1 py-px font-bold no-underline hover:underline;
+  }
+  .ref-code {
+    @apply text-primary inline-block min-w-[2.6rem] font-extrabold;
+  }
+
+  /* Documentos em markdown vindos do context/. */
+  .prose {
+    max-width: 48rem;
+  }
+  .prose > * + * {
+    margin-top: 0.85rem;
+  }
+  .prose h1 {
+    @apply text-3xl font-bold tracking-tight md:text-4xl;
+    line-height: 1.15;
+  }
+  .prose h2 {
+    @apply border-t pt-6 text-2xl font-bold tracking-tight;
+    margin-top: 2.5rem;
+  }
+  .prose h3 {
+    @apply text-xl font-bold;
+    margin-top: 1.75rem;
+  }
+  .prose p,
+  .prose li {
+    max-width: 68ch;
+  }
+  .prose a {
+    @apply text-primary underline decoration-1 hover:decoration-2;
+  }
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
+  .prose li + li {
+    margin-top: 0.35rem;
+  }
+  .prose li > ul,
+  .prose li > ol {
+    margin-top: 0.35rem;
+  }
+  .prose strong {
+    @apply font-bold;
+  }
+  .prose code {
+    @apply bg-muted rounded px-1.5 py-0.5 font-mono text-[0.9em];
+  }
+  .prose pre {
+    @apply overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed;
+  }
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+  .prose blockquote {
+    @apply border-primary bg-muted rounded-r-lg border-l-4 px-5 py-3;
+  }
+  .prose table {
+    @apply block w-full overflow-x-auto rounded-lg border text-[0.95rem];
+    border-collapse: collapse;
+  }
+  .prose th {
+    @apply bg-muted px-3 py-2 text-left align-top font-bold;
+  }
+  .prose td {
+    @apply border-t px-3 py-2 align-top;
+  }
+  .prose del {
+    @apply text-muted-foreground;
+  }
+  .prose hr {
+    @apply my-8;
+  }
+
+  /* Linha do roteiro. */
+  .roadmap-rail::before {
+    content: '';
+    position: absolute;
+    left: 1.0625rem;
+    top: 2.75rem;
+    bottom: -1.25rem;
+    width: 2px;
+    background: var(--border);
+  }
+  .roadmap-rail:last-child::before {
+    display: none;
+  }
+}
+
+/* Modo de alto contraste do sistema: bordas no lugar de sombras e gradientes. */
+@media (forced-colors: active) {
+  .text-gradient {
+    color: CanvasText;
+    background: none;
+  }
+  [data-slot='card'],
+  [data-slot='badge'],
+  [data-slot='button'] {
+    border: 1px solid CanvasText;
+  }
+}
